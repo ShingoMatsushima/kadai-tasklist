@@ -15,6 +15,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     
+    #user_idをセット
+    @task.user_id = session[:user_id]
+    
     if @task.save
       flash[:success] = "タスクを登録しました"
       redirect_to @task
@@ -28,7 +31,7 @@ class TasksController < ApplicationController
   end
 
   def update
-   if @task.update(task_params)
+    if @task.update(task_params)
       flash[:success] = "タスクを変更しました"
       redirect_to @task
     else
