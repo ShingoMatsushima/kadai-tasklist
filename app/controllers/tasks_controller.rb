@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :require_user_logged_in, only: [:index, :show]
   before_action :correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.page(params[:page]).per(10)
+    @tasks = current_user.tasks.page(params[:page]).per(10)
   end
 
   def show
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     
     #user_idをセット
-    @task.user_id = session[:user_id]
+    @task.user_id = current_user.id
     
     if @task.save
       flash[:success] = "タスクを登録しました"
@@ -49,10 +49,6 @@ class TasksController < ApplicationController
   end
 
   private
-
-  def set_message
-    @task = Task.find(params[:id])
-  end
 
   #Strong Parameter
   def task_params
