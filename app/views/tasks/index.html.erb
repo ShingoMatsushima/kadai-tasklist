@@ -14,15 +14,13 @@
     </thead>
     <tbody>
       <% @tasks.each do |task| %>
-        <% if task.user.id == current_user.id %> 
-          <tr>
-            <td><%= link_to task.id, task %></td>
-            <td><%= task.user.name %></td>
-            <td><%= task.user.id %></td>
-            <td><%= task.content %></td>
-            <td><%= task.status %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%= link_to task.id, task %></td>
+          <td><%= task.user.name %></td>
+          <td><%= task.user.id %></td>
+          <td><%= task.content %></td>
+          <td><%= task.status %></td>
+        </tr>
       <% end %>
     </tbody>
   </table> 
